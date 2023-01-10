@@ -1,0 +1,13 @@
+{
+    "_id": {
+      "$oid": "6395d12389fd46ec25ebf382"
+    },
+    "name": "suzuki swift",
+    "image": "https://stimg.cardekho.com/images/carexteriorimages/630x420/Maruti/Swift/8378/1644834798148/front-left-side-47.jpg?tr=w-456",
+    "capacity": 5,
+    "fuelType": "patrol",
+    "bookedTimeSlotes": [
+      "{from:1/1/2020},{to:2/1/2020}"
+    ],
+    "rentPerHour": "200"
+  }
