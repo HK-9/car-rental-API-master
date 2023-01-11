@@ -10,7 +10,6 @@ function connectDB(){
     connection.on('connected',() => {
         console.log('Mongo DB connection successfull');
     })
-
     connection.on('failed',() => {
         console.log('Mongo DB connection Error');
     })
