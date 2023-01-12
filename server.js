@@ -8,12 +8,12 @@ const dbconnection = require('./db')
 const usersRoute = require('./routes/usersRoute');
 const authRoute = require('./routes/authRoute');
 const varifyJWT = require('./middleware/varifyJWT');
-// require('dotenv').config();
+require('dotenv').config();
 
 app.use(express.json());
 app.use(cookieParser());
 
-// app.use(cors());
+app.use(cors());
 
 app.use('/api/auth', authRoute);
 app.use('/api/cars',varifyJWT,usersRoute);
