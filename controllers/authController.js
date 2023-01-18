@@ -5,13 +5,12 @@ const catchAsync = require('../utils/catchAsync');
 const createUserToken = require('../utils/createAccessToken');
 const OtpModel = require('../models/otpModel');
 const nodemailer = require('../utils/nodemailer');
-
+const utils = require('../utils/utils');
 
 
 
 exports.register = async(req,res,next) => {
     const email = req.body.email;
-    console.log("usernaem:::",email)
     try {
         newUserModel = await User.findOne({email})
         if(!newUserModel){
@@ -49,8 +48,9 @@ exports.login = async (req,res)=>{
 
 exports.requestOtp = catchAsync(async (req,res,next)=>{
     const { email } = req.query; 
+    console.log("email",email);
     if (!email) return res.status(400).json({ message: 'All fields require' });
-    await OtpModel.findOneAndDelete({ email })
+    await OtpModel.findOneAndDelete({email:email});
     const otp = Math.floor(1000 + Math.random() * 9000)
     const verifyOtp = new OtpModel({
         email, otp
@@ -61,18 +61,15 @@ exports.requestOtp = catchAsync(async (req,res,next)=>{
 })
 
 exports.verifyOtp = async(req,res,next)=>{
-    function removeQuotes(str) {
-        return str.replace(/['"]+/g, '');
-      }
     try {  
-        const { reqObj, email } = req.body;
-        newemail =removeQuotes(email);
+        const user = JSON.parse(req.body.user)
+        const { reqObj } = req.body;
+        const email = user.email
         const otp = reqObj;
-        const found = await OtpModel.findOne({email:newemail});
+        const found = await OtpModel.findOne({email:email});
         if (!found) return res.status(401).json({ message: 'something went wrong' });
         if (found.otp !== otp) return res.status(403).json({ message: 'invalid otp' });
-        const newUserModel = await User.findOne({ newemail })
-        console.log("newuser",newUserModel);
+        const newUserModel = await User.findOne({ email })
         newUserModel.isVerified = true;
         newUserModel.save();
         await OtpModel.findOneAndDelete({ email });

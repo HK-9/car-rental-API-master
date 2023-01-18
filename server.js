@@ -7,17 +7,20 @@ const cookieParser   =  require('cookie-parser');
 const dbconnection = require('./db')
 const usersRoute = require('./routes/usersRoute');
 const authRoute = require('./routes/authRoute');
+const adminRoute = require('./routes/adminRoute');
 const varifyJWT = require('./middleware/varifyJWT');
 require('dotenv').config();
+const corsOptions = require('./config/corsOptions');
 
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use('/api/auth', authRoute);
 app.use('/api/cars',varifyJWT,usersRoute);
 app.use('/api/bookings',varifyJWT,usersRoute);
+app.use('/api/admin',varifyJWT,adminRoute)
 ///add api version;
 
 // const path = require('path');

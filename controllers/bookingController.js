@@ -5,14 +5,14 @@ const stripe = require("stripe")(
   "sk_test_51MAsKUSBVpln2MKoraGh5vujdEZqv2qPGAGKy1EI4TL1NXeCjFVErD6OL569MWY4WCyUcENd6s62GqqCYCaETz1A00vFQlPiJ4"
 );
 
-
 exports.getallbookings = async (req, res) => {
   try {
+    if(!req.body.decoded) return res.status(401).json({message:'unothorized:Login again'})
     const userId = req.body.decoded.id;
     const bookings = await Booking.find({user:userId}).populate("car").lean();
-    console.log(bookings)
-    res.send(bookings);
+    res.status(200).send(bookings);
   } catch (error) {
+    console.log(error)
     return res.status(400).json(error);
   }
 };
