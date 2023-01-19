@@ -25,7 +25,7 @@ app.use(cors({ origin:true, credentials:true}));
 
 app.use('/api/auth', authRoute);
 app.use('/api/cars',varifyJWT,usersRoute);
-app.use('/api/bookings',varifyJWT,usersRoute);
+app.use('/api/bookings',usersRoute);
 app.use('/api/admin',varifyJWT,adminRoute)
 ///add api version;
 
