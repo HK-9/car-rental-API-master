@@ -5,7 +5,7 @@ const catchAsync = require('../utils/catchAsync');
 const createUserToken = require('../utils/createAccessToken');
 const OtpModel = require('../models/otpModel');
 const nodemailer = require('../utils/nodemailer');
-const utils = require('../utils/utils');
+const utils = require('../utils/utils');2
 
 
 
