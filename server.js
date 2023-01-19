@@ -23,9 +23,9 @@ app.use(cookieParser());
 app.use(cors());
 
 app.use('/api/auth', authRoute);
-app.use('/api/cars',varifyJWT,usersRoute);
-app.use('/api/bookings',varifyJWT,usersRoute);
-app.use('/api/admin',varifyJWT,adminRoute)
+app.use('/api/cars',usersRoute);
+app.use('/api/bookings',usersRoute);
+app.use('/api/admin',adminRoute)
 ///add api version;
 
 // const path = require('path');
