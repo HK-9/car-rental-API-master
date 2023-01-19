@@ -17,6 +17,7 @@ const createUserToken = async (user, code, req, res) => {
     sameSite: 'none',
     httpOnly: true,
     secure: true,
+    path: '/'
   });
   user.password = undefined;
   res.status(code).json({

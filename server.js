@@ -16,10 +16,13 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "https://www.rentx.gamexonline.store");
     res.header("Access-Control-Allow-Credentials", "true");
     next();
   });
-app.use(cors());
+
+app.use(cors({ origin:true, credentials:true}));
+
 app.use('/api/auth', authRoute);
 app.use('/api/cars',varifyJWT,usersRoute);
 app.use('/api/bookings',varifyJWT,usersRoute);
