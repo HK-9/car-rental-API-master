@@ -15,8 +15,11 @@ const corsOptions = require('./config/corsOptions');
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cors());
-
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+  });
+app.use(cors());git
 app.use('/api/auth', authRoute);
 app.use('/api/cars',varifyJWT,usersRoute);
 app.use('/api/bookings',varifyJWT,usersRoute);
