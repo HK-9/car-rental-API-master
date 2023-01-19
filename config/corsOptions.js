@@ -1,5 +1,5 @@
 const corsOptions ={
-    origin : ["https://rentex.netlify.app/","http//:localhost:3000"],
+    origin : ["https://www.rentx.gamexonline.store/","http//:localhost:3000"],
     credentials: true,
 };
 
