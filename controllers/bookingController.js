@@ -7,7 +7,7 @@ const stripe = require("stripe")(
 
 exports.getallbookings = async (req, res) => {
   try {
-    console.log('getallbookings/req.body.decoded:',req.query.user)
+    console.log('getallbookings/req.body.decoded:',req.query.user.decoded.id)
     if(!req.query.user) return res.status(401).json({message:'unothorized:Login again'})
     const userId = req.query.user.decoded.id;
     const bookings = await Booking.find({user:userId}).populate("car").lean();
