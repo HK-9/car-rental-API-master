@@ -11,12 +11,9 @@ const varifyJWT = (req,res,next)=>{
         jwt.verify(jwtToken,process.env.JWT_SECRET,(err,decoded)=>{
             if(err){
                 return res.status(403).json({message:'Forbiden-manupulated token'});
-            }      userId = decoded.id;     
-                req.user = {
-                    userId:userId
-                };
-                console.log("userID",userId)
-                console.log("object user",req.user)
+            }
+            req.userId = decoded.id;
+            console.log("decoded",req.userId)
             next();
         })
     } catch (error) {

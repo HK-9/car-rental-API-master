@@ -6,13 +6,13 @@ const stripe = require("stripe")( "sk_test_51MAsKUSBVpln2MKoraGh5vujdEZqv2qPGAGK
 
 exports.getallbookings = async (req, res) => {
   try {
-    if(!req.user) return res.status(401).json({message:'unothorized:Login again'})
-    const userId = req.user.userId;
-    console.log(userId);
+    const userId = req.userId;
+    if(!userId) return res.status(401).json({message:'unothorized:Login again'});
     const bookings = await Booking.find({user:userId}).populate("car").lean();
+    console.log('bookings',bookings);
     res.status(200).send(bookings);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(400).json(error);
   }
 };
@@ -23,7 +23,6 @@ exports.cancelbooking = async (req, res) => {
     const booking = await Booking.findById(bookingid);
     booking.status = "cancelled";
     await booking.save();
-
     const car = await Car.findById(carid);
     const bookedSlotes = car.bookedTimeSlotes;
     const temp = bookedSlotes.filter((e) => e.bookingId == bookingid);
