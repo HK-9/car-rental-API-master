@@ -4,7 +4,7 @@ const varifyJWT = (req,res,next)=>{
     try {
         
         const cookie = req.headers.cookie;
-        if(!cookie) return next();
+        if(!cookie) return res.status(403).json({messsage:'cookie missing'});
         const xjwtToken = cookie.split("=")[1];
         if(!xjwtToken) return res.status(402).json({message:'unauthorized'});
         const jwtToken = xjwtToken.split(";")[0];
@@ -12,12 +12,7 @@ const varifyJWT = (req,res,next)=>{
             if(err){
                 return res.status(403).json({message:'Forbiden-manupulated token'});
             }
-            console.log(decoded.id)
-            const userId = {
-                id: decoded.id
-            }
-            req.user = {userId}
-            console.log(req.user)
+            req.user = decoded
             next();
         })
     } catch (error) {

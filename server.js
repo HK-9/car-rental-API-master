@@ -9,11 +9,14 @@ const usersRoute = require('./routes/usersRoute');
 const authRoute = require('./routes/authRoute');
 const adminRoute = require('./routes/adminRoute');
 const varifyJWT = require('./middleware/varifyJWT');
+var bodyParser = require('body-parser')
 require('dotenv').config();
 const corsOptions = require('./config/corsOptions');
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Credentials", "true");
