@@ -48,7 +48,6 @@ exports.login = async (req,res)=>{
 
 exports.requestOtp = catchAsync(async (req,res,next)=>{
     const { email } = req.query; 
-    console.log("email",email);
     if (!email) return res.status(400).json({ message: 'All fields require' });
     await OtpModel.findOneAndDelete({email:email});
     const otp = Math.floor(1000 + Math.random() * 9000)

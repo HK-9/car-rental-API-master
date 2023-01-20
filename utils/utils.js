@@ -1,5 +1,4 @@
 const UserModel = require('../models/userModel')
-console.log('ethiii')
 utils = {
     getUser: async function (userId){
         try {

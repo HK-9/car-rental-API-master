@@ -20,11 +20,11 @@ app.use(function(req, res, next) {
     next();
   });
 app.use(cors());
-app.use('/',(rew,res)=>res.send(':) server is up and running..'));
 app.use('/api/auth', authRoute);
 app.use('/api/cars',varifyJWT,usersRoute);
 app.use('/api/bookings',varifyJWT,usersRoute);
 app.use('/api/admin',varifyJWT,adminRoute)
+app.use('/',(req,res)=>res.send(':) server is up and running..'));
 ///add api version;
 
 // const path = require('path');
