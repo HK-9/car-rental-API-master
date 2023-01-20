@@ -20,7 +20,7 @@ app.use(function(req, res, next) {
     next();
   });
 app.use(cors());
-
+app.use('/',(res,req)=>res.send(':) server is up and running..'));
 app.use('/api/auth', authRoute);
 app.use('/api/cars',varifyJWT,usersRoute);
 app.use('/api/bookings',varifyJWT,usersRoute);

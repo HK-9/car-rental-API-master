@@ -33,6 +33,6 @@ exports.cancelbooking = async (req, res) => {
     res.send("booking cancelled successfully");
   } catch (error) {
     console.log(error);
-    return res.status(400).json(error);
+    return res.status(400).json({message:error});
   }
 };
