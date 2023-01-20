@@ -9,20 +9,13 @@ const usersRoute = require('./routes/usersRoute');
 const authRoute = require('./routes/authRoute');
 const adminRoute = require('./routes/adminRoute');
 const varifyJWT = require('./middleware/varifyJWT');
-var bodyParser = require('body-parser')
 require('dotenv').config();
 const corsOptions = require('./config/corsOptions');
 
+app.set("trust proxy",1);
 app.use(express.json());
 app.use(cookieParser());
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Credentials", "true");
-    next();
-  });
-app.use(cors());
+app.use(cors(corsOptions));
 app.use('/api/auth', authRoute);
 app.use('/api/cars',varifyJWT,usersRoute);
 app.use('/api/bookings',varifyJWT,usersRoute);
