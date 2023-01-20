@@ -1,5 +1,5 @@
-const corsOptions ={
-    origin : ["https://www.rentx.gamexonline.store","http//:localhost:3000"],
+const   corsOptions ={
+    origin : ["https://rentx-api-e9zj.onrender.com","http//:localhost:3000"],
     credentials: true,
 };
 
