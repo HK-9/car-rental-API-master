@@ -12,12 +12,17 @@ const varifyJWT = (req,res,next)=>{
             if(err){
                 return res.status(403).json({message:'Forbiden-manupulated token'});
             }
-            req.user = decoded
+            console.log(decoded.id)
+            const userId = {
+                id: decoded.id
+            }
+            req.user = {userId}
+            console.log(req.user)
             next();
         })
     } catch (error) {
         console.log(error)
-        res.status(400).json({message:"error"})
+        return res.status(400).json({message:"error"})
     }
 }
 
