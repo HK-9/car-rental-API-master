@@ -3,10 +3,12 @@ const Car = require("../models/carModel");
 const { v4: uuidv4 } = require("uuid");
 const stripe = require("stripe")( "sk_test_51MAsKUSBVpln2MKoraGh5vujdEZqv2qPGAGKy1EI4TL1NXeCjFVErD6OL569MWY4WCyUcENd6s62GqqCYCaETz1A00vFQlPiJ4");
 
+
 exports.getallbookings = async (req, res) => {
   try {
     if(!req.user) return res.status(401).json({message:'unothorized:Login again'})
-    const userId = req.user.id;
+    const userId = req.user.userId;
+    console.log(userId);
     const bookings = await Booking.find({user:userId}).populate("car").lean();
     res.status(200).send(bookings);
   } catch (error) {
