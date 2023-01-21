@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const app = express()
 require('dotenv').config({path:'./.env'})
 const cors = require('cors')
@@ -10,12 +11,15 @@ const authRoute = require('./routes/authRoute');
 const adminRoute = require('./routes/adminRoute');
 const varifyJWT = require('./middleware/varifyJWT');
 require('dotenv').config();
-const corsOptions = require('./config/corsOptions');
+// const corsOptions = require('./config/corsOptions');
 
-app.set("trust proxy",1);
+//SETUP;
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser());
-app.use(cors(corsOptions));
+app.use(cors());
+
+//ROUTES
 app.use('/api/auth', authRoute);
 app.use('/api/cars',varifyJWT,usersRoute);
 app.use('/api/bookings',varifyJWT,usersRoute);

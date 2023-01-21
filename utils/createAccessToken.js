@@ -14,13 +14,13 @@ const createUserToken = async (user, code, req, res) => {
   try {
     
     const token = signToken(user._id);
-    res.cookie("jwt", token,{
-      path: "/",
+    res.cookie('jwt', token, {
       httpOnly: true,
-      domain: '.example.com', 
       secure: true,
-      samesite:'None'
-    });
+      sameSite: 'none',
+      maxAge: 7 * 24 * 60 * 60 * 1000
+  }).json({ token, user })
+
     user.password = undefined;
     res.status(code).json({
       status: "success",
