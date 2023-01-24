@@ -38,5 +38,4 @@ app.use('/',(req,res)=>res.send(':) server is up and running..'));
 //         res.sendFile(path.resolve(_dirname, 'client/build/index.html'))
 //     })
 // }
-
 app.listen(port,() => console.log(`Node js server started in ${port}`));

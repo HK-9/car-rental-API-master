@@ -59,14 +59,25 @@ exports.getallnotifications = async (req, res) => {
           }
         }}
       ])
-    
-      // const eachDaySale = await orderModel.aggregate([{$match:{status:"delivered"}},{$group: {_id: {day: {$dayOfMonth: "$createdAt"},month: {$month: "$createdAt"}, year:{$year: "$createdAt"}},total: {$sum: "$grandTotal"}}}]).sort({_id:1})
+      const eachDayUser = await UserModel.aggregate([{
+        $group:{
+          _id:{day:{$dayOfMonth: "$createdAt"},total:{$sum: "$totalAmount"}}
+        }
+      }])
       const eachDaySale = await BookingsModel.aggregate([{
         $group: {
           _id: {day: {$dayOfMonth: "$createdAt"},month: {$month: "$createdAt"}, year:{$year: "$createdAt"}},total: {$sum: "$totalAmount"}}}]).sort({_id:1})
-
-
-      return res.status(200).json({message:'succuss',data:{totalCount,totalAmount,userCount,carsCount,eachDaySale}})
+      const date=new Date()
+      const day=date.getDate()
+      let amount;
+      const dailySale=eachDaySale.find((value)=>value._id.day===day)
+      if(dailySale){
+        amount=dailySale.total 
+      }
+      else{
+       amount=0
+      }
+      return res.status(200).json({message:'succuss',data:{totalCount,totalAmount,userCount,carsCount,eachDaySale,amount}})
 
     } catch (error) {
       console.log(error)

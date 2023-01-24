@@ -7,8 +7,6 @@ const OtpModel = require('../models/otpModel');
 const nodemailer = require('../utils/nodemailer');
 const utils = require('../utils/utils');2
 
-
-
 exports.register = async(req,res,next) => {
     const email = req.body.email;
     try {
@@ -26,19 +24,14 @@ exports.register = async(req,res,next) => {
     }
 }
 
-
 exports.login = async (req,res)=>{
     const {username, password} = req.body;
         try {
-            console.log('processed')
             const jwt = process.env.JWT_SECRET;
             const user = await User.findOne({username}).select('+password'); //selected the hidden passcode to ensure security.
             const validPassword = await bcrypt.compare(password,user.password);
             if(!user || !(validPassword)) {
-                return res.status(400).json({
-                    status:'fail',
-                    message: "Wrong password or username"
-                });     
+                return res.status(401).json({status:'fail',message: "Wrong password or username"});     
             }
             createUserToken(user, 200, req, res);
         } catch (error) {
@@ -46,7 +39,6 @@ exports.login = async (req,res)=>{
             return res.status(400).json({message:'login block failed',error});
         }
 }
-
 
 exports.requestOtp = catchAsync(async (req,res,next)=>{
     const { email } = req.query; 

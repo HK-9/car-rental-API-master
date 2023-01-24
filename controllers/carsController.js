@@ -1,7 +1,6 @@
 const Car = require("../models/carModel");
 exports.getallcar = async (req, res) => {
   try {
-    console.log("processing @gerallcars")
     const cars = await Car.find();
     res.status(200).send(cars);
   } catch (error) {
