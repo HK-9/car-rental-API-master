@@ -16,7 +16,7 @@ require('dotenv').config();
 
 //SETUP;
 app.use(credentials);
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser());
