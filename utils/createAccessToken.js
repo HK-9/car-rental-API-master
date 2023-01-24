@@ -14,15 +14,8 @@ const createUserToken = async (user, code, req, res) => {
   try {
     
     const token = signToken(user._id);
-    res.cookie('jwt', token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 7 * 24 * 60 * 60 * 1000
-  }).json({ token, user })
-
     user.password = undefined;
-    res.status(code).json({
+    res.cookie("jwt", token,{sameSite: 'none', httpOnly: true, secure: true}).json({
       status: "success",
       token,
       data: {
@@ -31,7 +24,7 @@ const createUserToken = async (user, code, req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json(error)
+    res.status(400).json({message:'createUserTokenFailed',error})
   }
 };
 

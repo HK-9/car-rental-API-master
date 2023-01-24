@@ -1,9 +1,9 @@
 const Car = require("../models/carModel");
-
 exports.getallcar = async (req, res) => {
   try {
+    console.log("processing @gerallcars")
     const cars = await Car.find();
-    res.send(cars);
+    res.status(200).send(cars);
   } catch (error) {
     return res.status(400).json(error);
   }
@@ -21,6 +21,7 @@ exports.addcar = async (req, res) => {
 
 exports.editcar = async (req, res) => {
   try {
+
     const car = await Car.findById(req.body._id);
     car.name = req.body.name;
     car.image = req.body.image;
@@ -28,10 +29,9 @@ exports.editcar = async (req, res) => {
     car.rentPerHour = req.body.rentPerHour;
     car.capacity = req.body.capacity;
     car.category = req.body.category;
-
     await car.save();
-
     res.send("Car added successfully");
+
   } catch (error) {
     return res.status(400).json(error);
   }

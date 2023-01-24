@@ -10,22 +10,24 @@ const usersRoute = require('./routes/usersRoute');
 const authRoute = require('./routes/authRoute');
 const adminRoute = require('./routes/adminRoute');
 const varifyJWT = require('./middleware/varifyJWT');
+const corsOptions = require('./config/corsOptions')
+const credentials = require('./middleware/allowedCredentials');
 require('dotenv').config();
-// const corsOptions = require('./config/corsOptions');
 
 //SETUP;
+app.use(credentials);
+app.use(cors(corsOptions))
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser());
-app.use(cors());
-
+app.set("trust proxy", 1);
 //ROUTES
 app.use('/api/auth', authRoute);
 app.use('/api/cars',varifyJWT,usersRoute);
 app.use('/api/bookings',varifyJWT,usersRoute);
 app.use('/api/admin',varifyJWT,adminRoute)
 app.use('/',(req,res)=>res.send(':) server is up and running..'));
-///add api version;
+
 
 // const path = require('path');
 // const { rmSync } = require('fs');

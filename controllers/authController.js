@@ -30,6 +30,7 @@ exports.register = async(req,res,next) => {
 exports.login = async (req,res)=>{
     const {username, password} = req.body;
         try {
+            console.log('processed')
             const jwt = process.env.JWT_SECRET;
             const user = await User.findOne({username}).select('+password'); //selected the hidden passcode to ensure security.
             const validPassword = await bcrypt.compare(password,user.password);
@@ -41,7 +42,8 @@ exports.login = async (req,res)=>{
             }
             createUserToken(user, 200, req, res);
         } catch (error) {
-            return res.status(400).json(error);
+            console.log(error)
+            return res.status(400).json({message:'login block failed',error});
         }
 }
 
