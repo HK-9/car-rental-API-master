@@ -1,7 +1,6 @@
 const allowedOrigins = [
     'https://hk-9-car-rental-client2.vercel.app',
-    'https://rentxcars.netlify.app',
-    'https://hk-9-car-rental-client2-rncnhfbcv-hk-9.vercel.app',
+    'https://hk-9-car-rental-client2-pq2txd7er-hk-9.vercel.app',
     'http://127.0.0.1:3000',
     'http://localhost:3000',
     'http://localhost:3000',
