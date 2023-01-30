@@ -5,7 +5,9 @@ const catchAsync = require('../utils/catchAsync');
 const createUserToken = require('../utils/createAccessToken');
 const OtpModel = require('../models/otpModel');
 const nodemailer = require('../utils/nodemailer');
-const utils = require('../utils/utils');2
+const utils = require('../utils/utils');
+
+
 
 exports.register = async(req,res,next) => {
     const email = req.body.email;
@@ -41,16 +43,18 @@ exports.login = async (req,res)=>{
 }
 
 exports.requestOtp = catchAsync(async (req,res,next)=>{
-    const { email } = req.query; 
-    if (!email) return res.status(400).json({ message: 'All fields require' });
-    await OtpModel.findOneAndDelete({email:email});
-    const otp = Math.floor(1000 + Math.random() * 9000)
-    const verifyOtp = new OtpModel({
-        email, otp
-    })
-    await verifyOtp.save()
-    nodemailer.sendOtp(email, otp)
-    res.status(200).json({ message: 'otp send successfully' })
+    try {        
+        const { email } = req.query; 
+        if (!email) return res.status(400).json({ message: 'All fields require' });
+        await OtpModel.findOneAndDelete({email:email});
+        const otp = Math.floor(1000 + Math.random() * 9000);
+        const verifyOtp = new OtpModel({email, otp})
+        await verifyOtp.save();
+        nodemailer.sendOtp(email, otp);
+        res.status(200).json({ message: 'otp send successfully' });
+    } catch (error) {
+        res.status(400).json({message:"Request OTP route failed",error});
+    }
 })
 
 exports.verifyOtp = async(req,res,next)=>{

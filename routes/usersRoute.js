@@ -9,7 +9,7 @@ const stripeController = require('../controllers/stripeController');
 // C A R S
 
 router.post('/addcar',carsController.addcar);
-router.get('/getallcars',carsController.getallcar);
+// router.get('/getallcars',carsController.getallcar);
 router.post('/editcar',carsController.editcar)
 router.post('/deletecar',carsController.deletecar)
 

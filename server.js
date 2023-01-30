@@ -8,6 +8,7 @@ const cookieParser   =  require('cookie-parser');
 const dbconnection = require('./db')
 const usersRoute = require('./routes/usersRoute');
 const authRoute = require('./routes/authRoute');
+const carsRoute = require('./routes/carsRoute')
 const adminRoute = require('./routes/adminRoute');
 const varifyJWT = require('./middleware/varifyJWT');
 const corsOptions = require('./config/corsOptions')
@@ -24,6 +25,7 @@ app.set("trust proxy", 1);
 //ROUTES
 app.use('/api/auth', authRoute);
 app.use('/api/cars',varifyJWT,usersRoute);
+app.use('/api/landing',carsRoute);
 app.use('/api/bookings',varifyJWT,usersRoute);
 app.use('/api/admin',varifyJWT,adminRoute)
 app.use('/',(req,res)=>res.send(':) server is up and running..'));
